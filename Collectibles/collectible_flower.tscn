@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj308m16vtmvj"]
+
+[ext_resource type="PackedScene" uid="uid://rih3olhg482t" path="res://Collectibles/collectible.tscn" id="1_q3jcv"]
+[ext_resource type="Script" path="res://Collectibles/collectible_flower.gd" id="2_3g23u"]
+
+[node name="CollectibleFlower" instance=ExtResource("1_q3jcv")]
+script = ExtResource("2_3g23u")
+value = 10
+
+[node name="Sprite2D" parent="." index="0"]
+region_rect = Rect2(960, 128, 64, 64)

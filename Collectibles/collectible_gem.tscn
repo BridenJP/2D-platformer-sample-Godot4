@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3pv1p3krwves"]
+
+[ext_resource type="PackedScene" uid="uid://rih3olhg482t" path="res://Collectibles/collectible.tscn" id="1_1nsht"]
+
+[node name="CollectibleGem" instance=ExtResource("1_1nsht")]
+value = 5
+
+[node name="Sprite2D" parent="." index="0"]
+region_rect = Rect2(896, 64, 64, 64)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://rih3olhg482t"]
+
+[ext_resource type="Script" path="res://Collectibles/collectible.gd" id="1_lggdp"]
+[ext_resource type="Texture2D" uid="uid://cxhjxkj31g2e0" path="res://Assets/tilesheet_complete.png" id="2_p767c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ocmk"]
+radius = 16.0
+
+[node name="Collectible" type="Area2D"]
+z_index = 10
+script = ExtResource("1_lggdp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_p767c")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.08, 1)
+shape = SubResource("CircleShape2D_8ocmk")
+
+[node name="CollectSound" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="CollectSound" to="." method="_on_collect_sound_finished"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://crsouwk1eeexa"]
+
+[ext_resource type="Texture2D" uid="uid://cxhjxkj31g2e0" path="res://Assets/tilesheet_complete.png" id="1_78jai"]
+[ext_resource type="Script" path="res://Obstacles/obstacle.gd" id="1_p8p1c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s2dac"]
+size = Vector2(64, 64)
+
+[node name="Obstacle" type="Area2D"]
+script = ExtResource("1_p8p1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s2dac")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_78jai")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
