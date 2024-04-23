@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwubgyabvxorh"]
+[gd_scene load_steps=9 format=3 uid="uid://dwubgyabvxorh"]
 
 [ext_resource type="TileSet" uid="uid://b2kanoby0tp2m" path="res://Levels/level_1.tres" id="1_sdct1"]
 [ext_resource type="PackedScene" uid="uid://cwjc7wfk2uywc" path="res://Collectibles/collectible_coin.tscn" id="2_0gefi"]
@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://b3pv1p3krwves" path="res://Collectibles/collectible_gem.tscn" id="4_81acj"]
 [ext_resource type="PackedScene" uid="uid://cofcjrutbflqc" path="res://Obstacles/obstacle_spikes.tscn" id="5_e0trj"]
 [ext_resource type="PackedScene" uid="uid://c5kwlkgunse2q" path="res://Characters/player.tscn" id="6_oaln0"]
+[ext_resource type="Texture2D" uid="uid://cx7i1ptk0730q" path="res://Assets/spring.png" id="7_ka006"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qspj"]
+size = Vector2(20, 5.625)
 
 [node name="Level1" type="Node2D"]
 
@@ -51,3 +55,20 @@ layer_2/tile_data = PackedInt32Array(327677, 589824, 3, 262157, 655360, 1, 65555
 z_index = 1
 position = Vector2(832, -109)
 floor_max_angle = 0.797615
+
+[node name="Area2D" type="Area2D" parent="."]
+z_index = 5
+position = Vector2(732, 94)
+
+[node name="Spring" type="Sprite2D" parent="Area2D"]
+scale = Vector2(3.2, 3.2)
+texture = ExtResource("7_ka006")
+hframes = 2
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 18)
+scale = Vector2(3.2, 3.2)
+shape = SubResource("RectangleShape2D_6qspj")
+
+[connection signal="dying" from="Player" to="CollectibleCoin" method="_on_player_dying"]

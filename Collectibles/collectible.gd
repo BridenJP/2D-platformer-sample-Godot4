@@ -10,22 +10,19 @@ signal collected
 # So we can give collectibles different values (for adding to score etc)
 @export var value: int = 1
 
-func get_sound() -> Resource:
-	return preload("res://Sounds/collect.wav")
-
 func _ready() -> void:
 	# Note: This could be done directly on the node, but having it
 	# in code makes it easier to follow 
 	add_to_group("collectible")
-	
-	# Load sound
-	$CollectSound.stream = get_sound()
 
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
-		$CollectSound.play()
+		$Sounds.playTrack(get_sound())
 		hide() # NOTE: We'll free the collectible when the sound finishes		
 		emit_signal("collected", value)
 
-func _on_collect_sound_finished():
+func _on_main_sounds_finished():
 	queue_free() # Remove the object
+
+func get_sound() -> Sounds.Tracks:
+	return Sounds.Tracks.Collect

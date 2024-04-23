@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
+signal dying
 signal finished_dying
 
 # Normal walking speed
@@ -92,7 +93,7 @@ func _physics_process(delta) -> void:
 	if Input.is_action_just_pressed("ui_accept") and !airborne:
 		velocity.y = JUMP_VELOCITY
 		set_animation("jump_start")
-		$JumpSound.play()
+		$Sounds.playTrack(Sounds.Tracks.Jump)
 		jumping = true
 
 	# Get the input direction and handle the movement/deceleration.
@@ -130,18 +131,22 @@ func _physics_process(delta) -> void:
 	for i in range(get_slide_collision_count()):
 		var collider = get_slide_collision(i).get_collider()
 		if (collider is TileMap) && (collider.name == "DeadlyGround"):
-			deadness = LIFE_CYCLE.Dying
-			set_animation("dead")
+			die()
 		elif !(collider is TileMap):
 			print(collider.name)
 		# TODO Do something with the collider
 
+# Die! Set to "dying", play "dead" animation and emit signal
+func die() -> void:
+	deadness = LIFE_CYCLE.Dying
+	emit_signal("dying")
+	set_animation("dead")
+
 # Main tells us when our health changes
 func _on_health_changed(value) -> void:
 	# If health is 0, we are dying
-	if value <= 0:
-		deadness = LIFE_CYCLE.Dying
-		set_animation("dead")
+	if (deadness == LIFE_CYCLE.Alive) && (value <= 0):
+		die()
 
 # Handle changes that occur at end of animations
 func _on_sprite_animation_finished() -> void:

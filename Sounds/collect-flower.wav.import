@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://1kehy14774wh"
-path="res://.godot/imported/collect_flower.wav-ca3621ee8a582f3ede2ba30823718cee.sample"
+path="res://.godot/imported/collect-flower.wav-9405f034a0b7e9c6ca1ccc5ba5ffc747.sample"
 
 [deps]
 
-source_file="res://Sounds/collect_flower.wav"
-dest_files=["res://.godot/imported/collect_flower.wav-ca3621ee8a582f3ede2ba30823718cee.sample"]
+source_file="res://Sounds/collect-flower.wav"
+dest_files=["res://.godot/imported/collect-flower.wav-9405f034a0b7e9c6ca1ccc5ba5ffc747.sample"]
 
 [params]
 

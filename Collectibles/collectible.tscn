@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://rih3olhg482t"]
+[gd_scene load_steps=5 format=3 uid="uid://rih3olhg482t"]
 
 [ext_resource type="Script" path="res://Collectibles/collectible.gd" id="1_lggdp"]
 [ext_resource type="Texture2D" uid="uid://cxhjxkj31g2e0" path="res://Assets/tilesheet_complete.png" id="2_p767c"]
+[ext_resource type="PackedScene" uid="uid://c36pxe0d05a60" path="res://Sounds/Sounds.tscn" id="3_1fvsl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ocmk"]
 radius = 16.0
@@ -19,7 +20,7 @@ region_rect = Rect2(0, 0, 64, 64)
 scale = Vector2(1.08, 1)
 shape = SubResource("CircleShape2D_8ocmk")
 
-[node name="CollectSound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sounds" parent="." instance=ExtResource("3_1fvsl")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="finished" from="CollectSound" to="." method="_on_collect_sound_finished"]
+[connection signal="finished" from="Sounds" to="." method="_on_main_sounds_finished"]

@@ -11,6 +11,8 @@ var health: int
 var level_node: Node # Our placeholder node where we will put the level scene
 var current_level: Node2D # The currently loaded level scene
 
+const MUSIC_VOL_DB: float = -30.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	level_node = get_node("Level")
@@ -53,6 +55,7 @@ func connect_obstacles() -> void:
 func connect_player() -> void:
 	var player: Node = current_level.get_node_or_null("Player")
 	assert(player, "Player node not found or not ready")
+	player.connect("dying", _on_player_dying)
 	player.connect("finished_dying", _on_player_finished_dying)
 
 func _on_hud_game_started():
@@ -77,17 +80,23 @@ func _on_collectible_collected(value: int):
 func _on_obstacle_damage_done(damage: int):
 	set_health(health - damage)
 	
+func _on_player_dying() -> void:
+	$Sounds.playTrack(Sounds.Tracks.GameOver)
+	$Music.fade_to(-100.0, 1.0)
+
 func _on_player_finished_dying() -> void:
+	print("finished dying")
 	set_playing(false)
 	end_level()
 
 # Setter for playing (emits signal)
 func set_playing(value: bool):
 	playing = value
-	#if playing:
-		#$Music.play()
-	#else:
-		#$Music.stop()
+	if playing:		
+		$Music.playTrack(Sounds.Tracks.Music)
+		$Music.volume_db = MUSIC_VOL_DB
+	else:
+		$Music.stop()
 	emit_signal("playing_changed", playing)
 	
 # Setter for score (emits signal)
