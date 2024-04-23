@@ -4,16 +4,19 @@ class_name Player
 
 signal dying
 signal finished_dying
+signal winning
+signal finished_winning
 
 # Normal walking speed
-const SPEED = 300.0
+const SPEED: float = 300.0
 # How much to multiply by when running (Shift key)
-const RUN_MULTIPLIER = 2.0
+const RUN_MULTIPLIER: float = 2.0
 # Initial upwards velocity when we jump
-const JUMP_VELOCITY = -700.0
+const JUMP_VELOCITY: float = -700.0
 
-# Used to allow a "dying" state while the animation plays
-enum LIFE_CYCLE {Alive, Dying, Dead}
+# "dying" -> "dead" state while the sound and animation plays
+# "winning" -> "won" state while the sound and animation plays
+enum LIFE_CYCLE {Alive, Dying, Dead, Winning, Won}
 
 # Get the gravity from the project settings
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -24,7 +27,7 @@ var facing_right: bool = true
 # Different things happen when we are jumping
 var jumping: bool = false
 # Initial state of life
-var deadness: LIFE_CYCLE = LIFE_CYCLE.Alive
+var life_cycle: LIFE_CYCLE = LIFE_CYCLE.Alive
 
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
@@ -35,9 +38,10 @@ func _ready() -> void:
 	var main: Node = get_tree().root.get_node_or_null("Main")
 	assert(main, "Main scene not found or not ready")
 	main.connect("health_changed", _on_health_changed)
+	main.connect("level_complete", _on_level_complete)
 
 # Change the current animation
-func set_animation(value) -> void:
+func set_animation(value: String) -> void:
 	if animation != value:
 		animation = value
 		$Sprite.play(animation)
@@ -59,10 +63,17 @@ func update_sprite() -> void:
 		_:
 			$Sprite.position.x = 32 if facing_right else -32			
 	
+func stop_and_signal(signal_name: StringName) -> void:
+	# Stop processes
+	set_process(false)  
+	set_physics_process(false)
+	
+	emit_signal(signal_name)
+
 # This is where we continually manage our character's state
 func _physics_process(delta) -> void:
 	# Are we standing on something?
-	var airborne = not is_on_floor()
+	var airborne: bool = not is_on_floor()
 	
 	# If we are in the air...
 	if airborne:
@@ -73,15 +84,16 @@ func _physics_process(delta) -> void:
 			set_animation("jump_start")
 			jumping = true # Set jumping to true, so we don't repeat this
 
-	# If we are dying or dead, stop forward motion but continue general movement
-	if deadness > LIFE_CYCLE.Alive:
+	# If we are dying or dead, or winning or won, stop forward motion but continue general movement
+	if life_cycle != LIFE_CYCLE.Alive:
 		if airborne:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			move_and_slide()
-		elif deadness == LIFE_CYCLE.Dead:
-			emit_signal("finished_dying")
-			set_process(false)  # Stop processing once the player is dead
-		return # Don't process any more
+		elif life_cycle == LIFE_CYCLE.Dead:
+			stop_and_signal("finished_dying")
+		elif life_cycle == LIFE_CYCLE.Won:
+			emit_signal("finished_winning")
+		return # Don't go past here
 		
 	# If we aren't in the air, but we were previously, play the landing animation
 	# TODO This currently only lasts one frame, need to handle timing
@@ -98,10 +110,10 @@ func _physics_process(delta) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("go_left", "go_right")
+	var direction: float = Input.get_axis("go_left", "go_right")
 	# When the shift key is pressed we power up from walking to running
-	var running = Input.is_action_pressed("power")
-	var mult = RUN_MULTIPLIER if running else 1.0
+	var running: bool = Input.is_action_pressed("power")
+	var mult: float = RUN_MULTIPLIER if running else 1.0
 
 	if direction:
 		# For non-zero values we set the velocity
@@ -129,7 +141,7 @@ func _physics_process(delta) -> void:
 	
 	# Check for collisions after moving
 	for i in range(get_slide_collision_count()):
-		var collider = get_slide_collision(i).get_collider()
+		var collider: Object = get_slide_collision(i).get_collider()
 		if (collider is TileMap) && (collider.name == "DeadlyGround"):
 			die()
 		elif !(collider is TileMap):
@@ -138,20 +150,30 @@ func _physics_process(delta) -> void:
 
 # Die! Set to "dying", play "dead" animation and emit signal
 func die() -> void:
-	deadness = LIFE_CYCLE.Dying
+	life_cycle = LIFE_CYCLE.Dying
 	emit_signal("dying")
 	set_animation("dead")
 
 # Main tells us when our health changes
 func _on_health_changed(value) -> void:
 	# If health is 0, we are dying
-	if (deadness == LIFE_CYCLE.Alive) && (value <= 0):
+	if (life_cycle == LIFE_CYCLE.Alive) && (value <= 0):
 		die()
+
+func _on_level_complete() -> void:
+	life_cycle = LIFE_CYCLE.Winning
+	emit_signal("winning")
+	set_animation("win")
 
 # Handle changes that occur at end of animations
 func _on_sprite_animation_finished() -> void:
 	if animation == "jump_start" && jumping:
 		set_animation("jump_middle")
 		
-	if animation == "dead" && deadness == LIFE_CYCLE.Dying:
-		deadness = LIFE_CYCLE.Dead
+	if animation == "dead" && life_cycle == LIFE_CYCLE.Dying:
+		life_cycle = LIFE_CYCLE.Dead
+
+	if animation == "win" && life_cycle == LIFE_CYCLE.Winning:
+		life_cycle = LIFE_CYCLE.Won
+		
+# Die! Set to "dying", play "dead" animation and emit signal

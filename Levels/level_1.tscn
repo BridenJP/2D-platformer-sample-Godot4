@@ -40,6 +40,9 @@ position = Vector2(1322, 84)
 [node name="ObstacleSpikes" parent="." instance=ExtResource("5_e0trj")]
 position = Vector2(256, 95)
 
+[node name="ObstacleSpikes2" parent="." instance=ExtResource("5_e0trj")]
+position = Vector2(944, -98)
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_sdct1")
 format = 2

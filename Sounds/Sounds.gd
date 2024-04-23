@@ -5,6 +5,7 @@ enum Tracks {
 	Collect, 
 	CollectFlower,
 	GameOver,
+	YouWin,
 	Jump,
 	Music
 }
@@ -13,6 +14,7 @@ var Streams = [
 	preload("res://Sounds/collect.wav"),
 	preload("res://Sounds/collect-flower.wav"),
 	preload("res://Sounds/game-over.mp3"),
+	preload("res://Sounds/you-win.wav"),
 	preload("res://Sounds/jump.wav"),
 	preload("res://Sounds/music.mp3")
 ]

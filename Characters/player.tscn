@@ -339,6 +339,56 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1t1u5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ibni1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_iab4b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qhskb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5uixq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xc0g8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_c0a6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_n3v5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_een3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qxck8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fit83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_he8b1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2rk2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qvtgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_i8hvh")
+}],
+"loop": false,
+"name": &"win",
+"speed": 15.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kijl1"]
@@ -352,7 +402,7 @@ script = ExtResource("1_b7dut")
 position = Vector2(32, 0)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_881wu")
-animation = &"idle"
+animation = &"win"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_kijl1")
