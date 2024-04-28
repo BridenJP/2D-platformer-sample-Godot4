@@ -76,7 +76,7 @@
 [ext_resource type="Texture2D" uid="uid://bbesrer22nttx" path="res://Assets/flatboy/Walk (13).png" id="59_dypwg"]
 [ext_resource type="Texture2D" uid="uid://drq0xsa46gt8e" path="res://Assets/flatboy/Walk (14).png" id="60_rmr2s"]
 [ext_resource type="Texture2D" uid="uid://can867rn4uepo" path="res://Assets/flatboy/Walk (15).png" id="61_p7ns5"]
-[ext_resource type="PackedScene" uid="uid://c36pxe0d05a60" path="res://Sounds/Sounds.tscn" id="77_csqli"]
+[ext_resource type="PackedScene" uid="uid://c36pxe0d05a60" path="res://Sounds/sounds.tscn" id="77_csqli"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_881wu"]
 animations = [{

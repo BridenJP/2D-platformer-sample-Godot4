@@ -10,7 +10,7 @@ enum Tracks {
 	Music
 }
 
-var Streams = [
+var Streams: Array[AudioStream] = [
 	preload("res://Sounds/collect.wav"),
 	preload("res://Sounds/collect-flower.wav"),
 	preload("res://Sounds/game-over.mp3"),
@@ -24,7 +24,7 @@ func playTrack(track: Tracks) -> void:
 	play()
 
 # Function to fade from the current volume to a target volume over a specified duration
-func fade_to(target_volume_db: float, duration: float):
+func fade_to(target_volume_db: float, duration: float) -> void:
 	var start_volume: float = volume_db
 	var elapsed: float = 0.0
 	var timer: Timer = Timer.new()  # Create a new Timer node

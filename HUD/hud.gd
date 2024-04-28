@@ -8,7 +8,7 @@ const Common = preload("res://common.gd")
 var state: Common.GAME_STATE = Common.GAME_STATE.Start
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	# Trigger state changed to false to set initial (non-playing) state
 	_on_state_changed(Common.GAME_STATE.Start)
 	
@@ -19,11 +19,7 @@ func _ready():
 	main.connect("score_changed", _on_score_changed)
 	main.connect("health_changed", _on_health_changed)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta) -> void:
-	pass
-	
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		start_game()
 

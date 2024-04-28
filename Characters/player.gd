@@ -71,7 +71,7 @@ func stop_and_signal(signal_name: StringName) -> void:
 	emit_signal(signal_name)
 
 # This is where we continually manage our character's state
-func _physics_process(delta) -> void:
+func _physics_process(delta: float) -> void:
 	# Are we standing on something?
 	var airborne: bool = not is_on_floor()
 	
@@ -155,7 +155,7 @@ func die() -> void:
 	set_animation("dead")
 
 # Main tells us when our health changes
-func _on_health_changed(value) -> void:
+func _on_health_changed(value: int) -> void:
 	# If health is 0, we are dying
 	if (life_cycle == LIFE_CYCLE.Alive) && (value <= 0):
 		die()

@@ -21,7 +21,7 @@ func _on_body_entered(body: Node) -> void:
 		hide() # NOTE: We'll free the collectible when the sound finishes		
 		emit_signal("collected", value)
 
-func _on_main_sounds_finished():
+func _on_main_sounds_finished() -> void:
 	queue_free() # Remove the object
 
 func get_sound() -> Sounds.Tracks:

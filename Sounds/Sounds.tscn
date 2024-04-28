@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://c36pxe0d05a60"]
 
-[ext_resource type="Script" path="res://Sounds/Sounds.gd" id="1_gm22c"]
+[ext_resource type="Script" path="res://Sounds/sounds.gd" id="1_8ucjd"]
 
 [node name="Sounds" type="AudioStreamPlayer"]
 autoplay = true
-script = ExtResource("1_gm22c")
+script = ExtResource("1_8ucjd")

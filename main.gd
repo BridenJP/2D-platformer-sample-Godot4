@@ -72,7 +72,7 @@ func connect_player() -> void:
 	player.connect("finished_winning", _on_player_finished_winning)
 
 # When the HUD tells us to start the game
-func _on_hud_game_started():
+func _on_hud_game_started() -> void:
 	# If we don't have the current level load it and add it to our placeholder
 	if !current_level:
 		current_level = load("res://Levels/level_1.tscn").instantiate()
@@ -87,7 +87,7 @@ func _on_hud_game_started():
 	play()
 
 # A collectible has been collected
-func _on_collectible_collected(value: int):
+func _on_collectible_collected(value: int) -> void:
 	set_score(score + value)
 	n_collectibles -= 1
 	
@@ -95,7 +95,7 @@ func _on_collectible_collected(value: int):
 		emit_signal("level_complete")
 
 # An obstacle has been hit
-func _on_obstacle_damage_done(damage: int):
+func _on_obstacle_damage_done(damage: int) -> void:
 	set_health(health - damage)
 	
 func _on_player_dying() -> void:
@@ -117,7 +117,7 @@ func _on_player_finished_winning() -> void:
 	end_level()
 
 # Setter for state (emits signal)
-func set_state(value: Common.GAME_STATE):
+func set_state(value: Common.GAME_STATE) -> void:
 	state = value
 	if state == Common.GAME_STATE.Playing:
 		$Music.playTrack(Sounds.Tracks.Music)
@@ -127,12 +127,12 @@ func set_state(value: Common.GAME_STATE):
 	emit_signal("state_changed", state)
 	
 # Setter for score (emits signal)
-func set_score(value: int):
+func set_score(value: int) -> void:
 	score = value
 	emit_signal("score_changed", score)
 	
 # Setter for health (emits signal)
-func set_health(value: int):
+func set_health(value: int) -> void:
 	health = value
 	if health <= 0:
 		health = 0 # No need to be negative

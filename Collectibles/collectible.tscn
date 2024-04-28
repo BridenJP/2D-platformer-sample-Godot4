@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Collectibles/collectible.gd" id="1_lggdp"]
 [ext_resource type="Texture2D" uid="uid://cxhjxkj31g2e0" path="res://Assets/tilesheet_complete.png" id="2_p767c"]
-[ext_resource type="PackedScene" uid="uid://c36pxe0d05a60" path="res://Sounds/Sounds.tscn" id="3_1fvsl"]
+[ext_resource type="PackedScene" uid="uid://c36pxe0d05a60" path="res://Sounds/sounds.tscn" id="3_1fvsl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ocmk"]
 radius = 16.0
